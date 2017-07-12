@@ -18,7 +18,7 @@ void writeFile (fileBlock db, int id){  	//将文件内容写入文件块
 }
 
 int openFile (string fileaName){ 			//打开文件的目录块 返回对应的文件内容块编号
-	dirBlcok db;
+	dirBlock db;
 	db = readDir (curDirID);
 	if (db.sonDirID == -1)
 		return -1;
@@ -91,7 +91,7 @@ bool touch (string fileName,string newDirMod){           //当前目录下新建
 		return false;
 	}
 	if (newDirMod == "p") {
-		userBlcok ub = readUser (curUserID);
+		userBlock ub = readUser (curUserID);
 		if ((string)ub.userName != "admin") {
 			cout << "权限错误！" << endl;
 			return false;
@@ -102,7 +102,7 @@ bool touch (string fileName,string newDirMod){           //当前目录下新建
 		return false;
 	}
 	int dirID = giveDirBlock ();	//分配新的目录块
-	int indexID = giveIndexBlcok ();//分配新的索引块
+	int indexID = giveIndexBlock ();//分配新的索引块
 	int fileID = giveFileBlock();
 	if (dirID == -1 || indexID == -1||fileID == -1) {
 		cout << "磁盘空间不足!" << endl;
@@ -161,7 +161,7 @@ void cat (string filename){		//输出当前目录下的文件内容
 		cout << "权限错误！" << endl;
 		return ;
 	}
-	dirBlcok db = readDir (dirID);
+	dirBlock db = readDir (dirID);
 	indexBlock ib = readIndex (db.textLocation);
 	fileBlock fb = readFile (ib.diskOffset);
 	cout << fb.text << endl;
